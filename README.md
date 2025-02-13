@@ -1,4 +1,4 @@
-# PatchTrAD: A Transformer Patching-Based model focusing on Patch-Wise Reconstruciton error for Time Series Anomaly Detection
+# PatchTrAD: A Patching-Based Transformer focusing on Patch-Wise Reconstruciton error for Time Series Anomaly Detection
 
 In this repository, we implement **PatchTrAD** a Patching-Based Trasformer Anomaly Detector focusing on reconstruction error. The current implementation is designed for several datasets, ranging from univariate to multivariate time series.
 
