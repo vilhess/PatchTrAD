@@ -9,7 +9,7 @@ In this repository, we implement **PatchTrAD** a Patching-Based Trasformer Anoma
 To run the model on a specific dataset, use the following command:
 
 ```bash
-python main.py --dataset <dataset_name>
+python main.py dataset=<dataset_name>
 ```
 where `<dataset_name>` can be one of the following:  
 
