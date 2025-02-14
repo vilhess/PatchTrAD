@@ -7,6 +7,8 @@ import argparse
 from patchtrad import PatchTrad, PatchTradLit
 from utils import load_config, save_results
 
+torch.manual_seed(0)
+
 parser = argparse.ArgumentParser(description="Train PatchTrAD on a specified dataset")
 parser.add_argument("--dataset", type=str, default="smd", help="Specify dataset")
 args = parser.parse_args()
