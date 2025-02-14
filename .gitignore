@@ -1,4 +1,7 @@
-data/
+*.npy
+*.csv
+*.txt
+*.xlsx
 *__pycache__/
 *.DS_Store
 *checkpoints/
