@@ -21,9 +21,9 @@ where `<dataset_name>` can be one of the following:
 - `swat`  
 
 
-Hyperparameters are defined in the configuration file: ``` jsons/config.json```
+Hyperparameters for each datasets are defined in the configuration folder: ``` conf/dataset```
 
-After each run, the results are saved in: ``` jsons/results.json```
+After each run, the results are saved in: ``` results/results.json```
 
 ## Datasets
 
