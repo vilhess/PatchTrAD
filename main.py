@@ -18,6 +18,7 @@ torch.manual_seed(0)
 def main(cfg: DictConfig):
 
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
     print(f"---------")
     print("Config:")
     print(OmegaConf.to_yaml(cfg))
@@ -73,7 +74,7 @@ def main(cfg: DictConfig):
     
     final_auc = np.mean(aucs)
     print(f"Final AUC: {final_auc}")
-    save_results(filename="jsons/results.json", dataset=dataset, model=f"patchtrad_S{config.stride}_L{config.patch_len}", auc=round(final_auc, 4))
+    save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad_S{config.stride}_L{config.patch_len}", auc=round(final_auc, 4))
 
 if __name__ == "__main__":
     main()
