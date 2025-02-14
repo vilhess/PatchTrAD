@@ -16,10 +16,10 @@ args = parser.parse_args()
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 dataset = args.dataset
-config = load_config(filename="jsons/config.json", dataset=dataset)
-
 av_datasets = ["nyc_taxi", "smd", "smap", "msl", "swat", "ec2_request_latency_system_failure"]
 assert dataset in av_datasets, f'Dataset ({dataset}) should be in {av_datasets}'
+
+config = load_config(filename="jsons/config.json", dataset=dataset)
 
 # Some datasets (MSL, SMAP, SMD) are composed of many subsets: score = mean accuracy on each subset, that is why we use list of loaders
 
