@@ -6,7 +6,7 @@ in_dim: 51
 epochs: 5
 stride: 6
 patch_len: 8
-d_model: 32
+d_model: 64
 n_heads: 16
-n_layers: 3
-d_ff: 256
+n_layers: 2
+d_ff: 128
