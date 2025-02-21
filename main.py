@@ -12,8 +12,6 @@ from dataset.nasa import get_loaders as get_nasa_loaders, smapfiles, mslfiles
 from dataset.smd import get_loaders as get_smd_loaders, machines
 from dataset.swat import get_loaders as get_swat_loaders
 
-torch.manual_seed(0)
-
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(cfg: DictConfig):
 
@@ -43,6 +41,7 @@ def main(cfg: DictConfig):
     aucs = []
     
     for i, (trainloader, testloader) in enumerate(loaders):
+        torch.manual_seed(0)
         print(f"Currently working on subset {i+1}/{len(loaders)}")
         
         model = PatchTrad(window_size=config.ws+1, n_vars=config.in_dim, stride=config.stride, patch_len=config.patch_len,
