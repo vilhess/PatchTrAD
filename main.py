@@ -4,6 +4,8 @@ from sklearn.metrics import roc_auc_score
 import numpy as np
 import hydra
 from omegaconf import DictConfig, OmegaConf
+import wandb
+from pytorch_lightning.loggers import WandbLogger
 
 from patchtrad import PatchTrad, PatchTradLit
 from utils import save_results
@@ -11,6 +13,8 @@ from dataset.nab import get_loaders as get_nab_loaders
 from dataset.nasa import get_loaders as get_nasa_loaders, smapfiles, mslfiles
 from dataset.smd import get_loaders as get_smd_loaders, machines
 from dataset.swat import get_loaders as get_swat_loaders
+
+torch.multiprocessing.set_sharing_strategy('file_system')
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(cfg: DictConfig):
@@ -37,6 +41,8 @@ def main(cfg: DictConfig):
         loaders = [get_smd_loaders(window_size=config.ws, root_dir="data/smd/processed", machine=m, batch_size=config.bs) for m in machines]
     elif dataset == "swat":
         loaders = [get_swat_loaders(window_size=config.ws, root_dir="data/swat", batch_size=config.bs)]
+
+    wandb_logger = WandbLogger(project='PatchTrAD', name=f"dataset_{dataset}")
     
     aucs = []
     
@@ -49,7 +55,7 @@ def main(cfg: DictConfig):
                           normalize=1, learn_pe=False)
         
         LitModel = PatchTradLit(model=model)
-        trainer = L.Trainer(max_epochs=config.epochs, logger=False, enable_checkpointing=False)
+        trainer = L.Trainer(max_epochs=config.epochs, logger=wandb_logger, enable_checkpointing=False, log_every_n_steps=1)
         trainer.fit(model=LitModel, train_dataloaders=trainloader)
         
         test_errors, test_labels = [], []
@@ -70,10 +76,15 @@ def main(cfg: DictConfig):
         auc = roc_auc_score(y_true=test_labels, y_score=test_scores)
         print(f"AUC: {auc}")
         aucs.append(auc)
+
+        wandb_logger.experiment.config[f"auc_subset_{i+1}/{len(loaders)}"] = auc
     
     final_auc = np.mean(aucs)
     print(f"Final AUC: {final_auc}")
     save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
+
+    wandb_logger.experiment.config["final_auc"] = final_auc
+    wandb.finish()
 
 if __name__ == "__main__":
     main()

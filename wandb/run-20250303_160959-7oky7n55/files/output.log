@@ -1,0 +1,7 @@
+Epoch 3:   0%|                                                                 | 0/22 [00:00<?, ?it/s, v_num=7n55]
+Exception ignored in: <function _releaseLock at 0x7a3c50565620>
+Traceback (most recent call last):
+  File "/home/svilhes/anaconda3/envs/anots/lib/python3.11/logging/__init__.py", line 237, in _releaseLock
+    def _releaseLock():
+
+KeyboardInterrupt:

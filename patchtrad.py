@@ -334,6 +334,7 @@ class PatchTradLit(L.LightningModule):
         x, _ = batch
         loss = self.model.get_loss(x, mode="train")
         loss = loss.mean()
+        self.log("train_loss", loss)
         return loss
     
     def configure_optimizers(self):
