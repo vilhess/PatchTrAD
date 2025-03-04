@@ -6,4 +6,3 @@
 *.DS_Store
 *checkpoints/
 *.ipynb
-wandb/
