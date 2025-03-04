@@ -54,10 +54,10 @@ class NABdata(Dataset):
         start = index
         end = index + self.window_size
 
-        anomaly = 1
+        anomaly = 0
         timestamp = self.data.index[end]
         if timestamp in pd.to_datetime(self.config["anomaly_dates"]):
-            anomaly = 0
+            anomaly = 1
 
         features = self.data.iloc[start:end+1]
         return torch.tensor(features.values, dtype=torch.float32).unsqueeze(1), anomaly

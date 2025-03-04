@@ -40,15 +40,15 @@ class NASA(Dataset):
         x_attack_scaled = scaler.transform(attack).clip(0, 1)
         attack = pd.DataFrame(x_attack_scaled)
 
-        labels = np.ones(len(attack))
+        labels = np.zeros(len(attack))
         for i in range(0, len(indices), 2):
-            labels[indices[i]:indices[i+1]] = 0
+            labels[indices[i]:indices[i+1]] = 1
         
         assert self.mode in ['train', 'test'], "mode must be 'train' or 'test'"
 
         if self.mode=="train": 
             self.data = normal
-            self.labels = np.ones(len(normal))
+            self.labels = np.zeros(len(normal))
 
         elif self.mode=="test": 
             self.data = attack

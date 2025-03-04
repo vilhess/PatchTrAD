@@ -71,7 +71,7 @@ def main(cfg: DictConfig):
         
         test_errors = torch.cat(test_errors).detach().cpu()
         test_labels = torch.cat(test_labels).detach().cpu()
-        test_scores = -test_errors
+        test_scores = test_errors.numpy()
         
         auc = roc_auc_score(y_true=test_labels, y_score=test_scores)
         print(f"AUC: {auc}")

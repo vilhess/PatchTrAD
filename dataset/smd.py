@@ -31,11 +31,11 @@ class SMD(Dataset):
 
         if self.mode=="train": 
             self.data = normal
-            self.labels = np.ones(len(normal))
+            self.labels = np.zeros(len(normal))
 
         elif self.mode=="test": 
             self.data = attack
-            self.labels = 1-labels
+            self.labels = labels
 
         self.data = self.data.values
 
