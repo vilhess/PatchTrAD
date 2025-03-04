@@ -6,7 +6,22 @@ In this repository, we implement **PatchTrAD** a Patching-Based Trasformer Anoma
 
 ## Run the Model
 
-To run the model on a specific dataset, use the following command:
+1. Install the required packages using the following command:
+
+```bash
+pip install -r requirements.txt
+```
+
+2. Downlad the datasets following the instructions in the ```Datasets``` section.
+
+3. To run the model for all datasets, use the following command:
+
+```bash
+chmod +x ./run_models.sh
+./run_models.sh
+```
+
+4. To run the model on a specific dataset, use the following command:
 
 ```bash
 python main.py dataset=<dataset_name>
@@ -54,6 +69,5 @@ This dataset originates from the **OmniAnomaly** methods and can be downloaded b
 - **MSL Dataset** The files should be placed in the root directory under `data/nasa`.  
 
 These datasets contains expert-labeled telemetry anomaly data from the Soil Moisture Active Passive (SMAP) satellite and the Mars Science Laboratory (MSL). They are provided from the **NASA Jet Propulsion Laboratory** [Paper](https://arxiv.org/abs/1802.04431) [GitHub](https://github.com/khundman/telemanom)
-
 
 ---
