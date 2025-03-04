@@ -1,1 +1,1 @@
-{}
+{"nyc_taxi": {"patchtrad": 0.9222}, "ec2_request_latency_system_failure": {"patchtrad": 0.9987}, "msl": {"patchtrad": 0.6219}, "swat": {"patchtrad": 0.8446}, "smap": {"patchtrad": 0.6291}, "smd": {"patchtrad": 0.8693}}
