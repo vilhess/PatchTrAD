@@ -6,6 +6,7 @@ import hydra
 from omegaconf import DictConfig, OmegaConf
 import wandb
 from pytorch_lightning.loggers import WandbLogger
+import gc
 
 from patchtrad import PatchTrad, PatchTradLit
 from utils import save_results
@@ -59,13 +60,13 @@ def main(cfg: DictConfig):
         trainer.fit(model=LitModel, train_dataloaders=trainloader)
         
         test_errors, test_labels = [], []
-        model = LitModel.model.to(DEVICE)
-        model.eval()
+        LitModel = LitModel.to(DEVICE)
+        LitModel.eval()
         
         with torch.no_grad():
             for x, anomaly in testloader:
                 x = x.to(DEVICE)
-                errors = model.get_loss(x, mode="test")
+                errors = LitModel.get_loss(x, mode="test")
                 test_labels.append(anomaly)
                 test_errors.append(errors)
         
@@ -78,6 +79,17 @@ def main(cfg: DictConfig):
         aucs.append(auc)
 
         wandb_logger.experiment.config[f"auc_subset_{i+1}/{len(loaders)}"] = auc
+
+        # To empty the gpu after each loop
+        LitModel.to("cpu")
+        del LitModel
+        del test_errors, test_labels, trainloader, testloader
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
+        del trainer
+        trainer = None
+        gc.collect()
+        torch.cuda.empty_cache()
     
     final_auc = np.mean(aucs)
     print(f"Final AUC: {final_auc}")

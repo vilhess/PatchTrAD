@@ -276,11 +276,22 @@ class PatchHead(nn.Module):
     
 
 class PatchTrad(nn.Module):
-    def __init__(self, window_size, n_vars, stride, patch_len, d_model=16, 
-                 n_heads=16, n_layers=3, d_ff=256, attn_dp=0., dp=0.3,
-                 head_dp=0., normalize=True, learn_pe=True):
-        
+    def __init__(self, config):
         super().__init__()
+
+        window_size = config.ws+1
+        n_vars = config.in_dim
+        stride = config.stride
+        patch_len = config.patch_len
+        d_model = config.d_model
+        n_heads = config.n_heads
+        n_layers = config.n_layers
+        d_ff = config.d_ff
+        learn_pe = False
+        normalize=True
+        head_dp=0.
+        attn_dp=0.
+        dp=0.3
 
         self.patcher = Patcher(window_size=window_size, stride=stride, patch_len=patch_len)
         shape = self.patcher.shape
@@ -325,10 +336,10 @@ class PatchTrad(nn.Module):
     
 
 class PatchTradLit(L.LightningModule):
-    def __init__(self, model, lr=1e-4):
+    def __init__(self, config):
         super().__init__()
-        self.model = model
-        self.lr = lr
+        self.model = PatchTrad(config)
+        self.lr = config.lr
     
     def training_step(self, batch, batch_idx):
         x, _ = batch
@@ -340,3 +351,6 @@ class PatchTradLit(L.LightningModule):
     def configure_optimizers(self):
         optimizer = optim.Adam(self.parameters(), lr=self.lr)
         return optimizer
+    
+    def get_loss(self, x, mode=None):
+        return self.model.get_loss(x, mode=mode)
