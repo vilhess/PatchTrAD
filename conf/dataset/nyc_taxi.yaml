@@ -1,6 +1,7 @@
 name: nyc_taxi
 
 bs: 256
+lr: 1e-4
 ws: 31
 in_dim: 1
 epochs: 20

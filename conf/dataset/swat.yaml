@@ -1,6 +1,7 @@
 name: swat
 
 bs: 128
+lr: 1e-4
 ws: 99
 in_dim: 51
 epochs: 5

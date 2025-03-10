@@ -8,7 +8,7 @@ import wandb
 from pytorch_lightning.loggers import WandbLogger
 import gc
 
-from patchtrad import PatchTrad, PatchTradLit
+from patchtrad import PatchTradLit
 from utils import save_results
 from dataset.nab import get_loaders as get_nab_loaders
 from dataset.nasa import get_loaders as get_nasa_loaders, smapfiles, mslfiles
@@ -50,12 +50,8 @@ def main(cfg: DictConfig):
     for i, (trainloader, testloader) in enumerate(loaders):
         torch.manual_seed(0)
         print(f"Currently working on subset {i+1}/{len(loaders)}")
-        
-        model = PatchTrad(window_size=config.ws+1, n_vars=config.in_dim, stride=config.stride, patch_len=config.patch_len,
-                          d_model=config.d_model, n_heads=config.n_heads, n_layers=config.n_layers, d_ff=config.d_ff,
-                          normalize=1, learn_pe=False)
-        
-        LitModel = PatchTradLit(model=model)
+   
+        LitModel = PatchTradLit(config)
         trainer = L.Trainer(max_epochs=config.epochs, logger=wandb_logger, enable_checkpointing=False, log_every_n_steps=1)
         trainer.fit(model=LitModel, train_dataloaders=trainloader)
         
