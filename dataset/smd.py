@@ -73,6 +73,7 @@ def load_and_save(category, filename, dataset, dataset_folder, output_folder):
     return temp.shape
 
 def processing(dataset_folder="data/smd"):
+    os.makedirs(os.path.join(dataset_folder, "processed"), exist_ok=True)
     output_folder = os.path.join(dataset_folder, "processed")
     file_list = os.listdir(os.path.join(dataset_folder, "train"))
     for filename in file_list:

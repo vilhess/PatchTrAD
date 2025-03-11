@@ -74,4 +74,9 @@ After each run, the results are saved in: ``` results/results.json```
 
 - These datasets contains expert-labeled telemetry anomaly data from the Soil Moisture Active Passive (SMAP) satellite and the Mars Science Laboratory (MSL). They are provided from the **NASA Jet Propulsion Laboratory** [Paper](https://arxiv.org/abs/1802.04431) [GitHub](https://github.com/khundman/telemanom)
 
+> To process directly the **Server Machine Dataset** and the **SWAT Dataset**, you can use the following command:
+```python
+python dataset/preprocess.py
+```
+
 ---
