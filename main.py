@@ -74,7 +74,7 @@ def main(cfg: DictConfig):
         print(f"AUC: {auc}")
         aucs.append(auc)
 
-        wandb_logger.experiment.config[f"auc_subset_{i+1}/{len(loaders)}"] = auc
+        wandb_logger.experiment.summary[f"auc_subset_{i+1}/{len(loaders)}"] = auc
 
         # To empty the gpu after each loop
         LitModel.to("cpu")
@@ -91,7 +91,7 @@ def main(cfg: DictConfig):
     print(f"Final AUC: {final_auc}")
     save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
 
-    wandb_logger.experiment.config["final_auc"] = final_auc
+    wandb_logger.experiment.summary["final_auc"] = final_auc
     wandb.finish()
 
 if __name__ == "__main__":
