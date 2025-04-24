@@ -93,3 +93,19 @@ To preprocess SWAT or SMD datasets, run:
 ```bash
 python dataset/preprocess.py
 ```
+
+---
+
+## 📚 Citation
+
+If you use this project in your research, please cite:
+
+@misc{
+      title={PatchTrAD: A Patch-Based Transformer focusing on Patch-Wise Reconstruction Error for Time Series Anomaly Detection}, 
+      author={Samy-Melwan Vilhes and Gilles Gasso and Mokhtar Z Alaya},
+      year={2025},
+      eprint={2504.08827},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2504.08827}, 
+}
