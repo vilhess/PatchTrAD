@@ -100,6 +100,7 @@ python dataset/preprocess.py
 
 If you use this project in your research, please cite:
 
+```
 @misc{
       title={PatchTrAD: A Patch-Based Transformer focusing on Patch-Wise Reconstruction Error for Time Series Anomaly Detection}, 
       author={Samy-Melwan Vilhes and Gilles Gasso and Mokhtar Z Alaya},
@@ -109,3 +110,4 @@ If you use this project in your research, please cite:
       primaryClass={cs.LG},
       url={https://arxiv.org/abs/2504.08827}, 
 }
+```
