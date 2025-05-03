@@ -1,6 +1,5 @@
 import torch
 import lightning as L
-from sklearn.metrics import roc_auc_score
 import numpy as np
 import hydra
 from omegaconf import DictConfig, OmegaConf
@@ -55,37 +54,24 @@ def main(cfg: DictConfig):
         trainer = L.Trainer(max_epochs=config.epochs, logger=wandb_logger, enable_checkpointing=False, log_every_n_steps=1)
         trainer.fit(model=LitModel, train_dataloaders=trainloader)
         
-        test_errors, test_labels = [], []
-        LitModel = LitModel.to(DEVICE)
-        LitModel.eval()
-        
-        with torch.no_grad():
-            for x, anomaly in testloader:
-                x = x.to(DEVICE)
-                errors = LitModel.get_loss(x, mode="test")
-                test_labels.append(anomaly)
-                test_errors.append(errors)
-        
-        test_errors = torch.cat(test_errors).detach().cpu()
-        test_labels = torch.cat(test_labels).detach().cpu()
-        test_scores = test_errors.numpy()
-        
-        auc = roc_auc_score(y_true=test_labels, y_score=test_scores)
+        results = trainer.test(model=LitModel, dataloaders=testloader)
+        auc = results[0]["auc"]
+
         print(f"AUC: {auc}")
         aucs.append(auc)
 
         wandb_logger.experiment.summary[f"auc_subset_{i+1}/{len(loaders)}"] = auc
 
-        # To empty the gpu after each loop
-        LitModel.to("cpu")
-        del LitModel
-        del test_errors, test_labels, trainloader, testloader
-        torch.cuda.empty_cache()
-        torch.cuda.synchronize()
-        del trainer
-        trainer = None
-        gc.collect()
-        torch.cuda.empty_cache()
+        if DEVICE == "cuda": # To empty the gpu after each loop
+            LitModel.to("cpu")
+            del LitModel
+            del trainloader, testloader
+            torch.cuda.empty_cache()
+            torch.cuda.synchronize()
+            del trainer
+            trainer = None
+            gc.collect()
+            torch.cuda.empty_cache()
     
     final_auc = np.mean(aucs)
     print(f"Final AUC: {final_auc}")
