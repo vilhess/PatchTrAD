@@ -76,7 +76,7 @@ def main(cfg: DictConfig):
     
     final_auc = np.mean(aucs)
     print(f"Final AUC: {final_auc}")
-    save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
+    #save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
 
     wandb_logger.experiment.summary["final_auc"] = final_auc
     wandb.finish()

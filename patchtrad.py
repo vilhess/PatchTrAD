@@ -335,14 +335,30 @@ class PatchTrad(nn.Module):
         return error
     
 
+class StreamAUC:
+    def __init__(self):
+        self.test_scores = []
+        self.test_labels = []
+    
+    def update(self, errors, labels):
+
+        self.test_scores.append(errors)
+        self.test_labels.append(labels)
+    
+    def compute(self):
+        self.test_scores = torch.cat(self.test_scores).detach().cpu().numpy()
+        self.test_labels = torch.cat(self.test_labels).detach().cpu().numpy()
+
+        auc = roc_auc_score(y_true=self.test_labels, y_score=self.test_scores)
+        return auc
+    
 class PatchTradLit(L.LightningModule):
     def __init__(self, config):
         super().__init__()
         self.model = PatchTrad(config)
         self.lr = config.lr 
 
-        self.test_scores = []
-        self.test_labels = []
+        self.auc = StreamAUC()
     
     def training_step(self, batch, batch_idx):
         x, _ = batch
@@ -362,13 +378,10 @@ class PatchTradLit(L.LightningModule):
         x, y = batch
         errors = self.get_loss(x, mode="test")
 
-        self.test_scores.append(errors)
-        self.test_labels.append(y)
+        self.auc.update(errors, y)
     
     def on_test_epoch_end(self):
      
-        self.test_scores = torch.cat(self.test_scores).detach().cpu().numpy()
-        self.test_labels = torch.cat(self.test_labels).detach().cpu().numpy()
-        
-        auc = roc_auc_score(y_true=self.test_labels, y_score=self.test_scores)
+        auc = self.auc.compute()
         self.log("auc", auc, prog_bar=True)
+        self.auc = StreamAUC()
