@@ -352,6 +352,10 @@ class StreamAUC:
         auc = roc_auc_score(y_true=self.test_labels, y_score=self.test_scores)
         return auc
     
+    def reset(self):
+        self.test_scores = []
+        self.test_labels = []
+    
 class PatchTradLit(L.LightningModule):
     def __init__(self, config):
         super().__init__()
@@ -384,4 +388,4 @@ class PatchTradLit(L.LightningModule):
      
         auc = self.auc.compute()
         self.log("auc", auc, prog_bar=True)
-        self.auc = StreamAUC()
+        self.auc.reset()
