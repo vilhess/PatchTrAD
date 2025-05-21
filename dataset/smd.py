@@ -64,20 +64,3 @@ def get_loaders(root_dir="data/smd/processed", machine="machine-1-1_", window_si
     return trainloader, testloader
 
 
-def load_and_save(category, filename, dataset, dataset_folder, output_folder):
-    temp = np.genfromtxt(os.path.join(dataset_folder, category, filename),
-                         dtype=np.float64,
-                         delimiter=',')
-    print(dataset, category, filename, temp.shape)
-    np.save(os.path.join(output_folder, f"{dataset}_{category}.npy"), temp)
-    return temp.shape
-
-def processing(dataset_folder="data/smd"):
-    os.makedirs(os.path.join(dataset_folder, "processed"), exist_ok=True)
-    output_folder = os.path.join(dataset_folder, "processed")
-    file_list = os.listdir(os.path.join(dataset_folder, "train"))
-    for filename in file_list:
-        if filename.endswith('.txt'):
-            _ = load_and_save('train', filename, filename.strip('.txt'), dataset_folder, output_folder)
-            _ = load_and_save('test', filename, filename.strip('.txt'), dataset_folder, output_folder)
-            _ = load_and_save('test_label', filename, filename.strip('.txt'), dataset_folder, output_folder)

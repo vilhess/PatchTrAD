@@ -53,22 +53,3 @@ def get_loaders(root_dir="data", window_size=10, batch_size=32):
     testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=21)
 
     return trainloader, testloader
-
-def processing(root="data/swat"):
-    normal = pd.read_excel(os.path.join(root, 'SWaT_Dataset_Normal_v1.xlsx'))
-    normal = normal.iloc[1:, 1:-1].to_numpy()
-
-    scaler = StandardScaler()
-    x_normal_scaled = scaler.fit_transform(normal)
-    np.save(os.path.join(root, "normal.npy"), x_normal_scaled)
-
-    attack = pd.read_excel(os.path.join(root, 'SWaT_Dataset_Attack_v0.xlsx'))
-
-    labels = attack.iloc[1:, -1] == 'Attack'
-    labels = labels.to_numpy().astype(int)
-
-    attack = attack.iloc[1:, 1:-1].to_numpy()
-    x_attack_scaled = scaler.transform(attack)
-
-    np.save(os.path.join(root, "attack.npy"), x_attack_scaled)
-    np.save(os.path.join(root, "attack_label.npy"), labels)

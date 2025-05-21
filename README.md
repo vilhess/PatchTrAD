@@ -13,8 +13,11 @@ pip install -r requirements.txt
 ```
 
 ### 2. Prepare the Datasets
-
-Download and place the datasets as described in the [Datasets](#datasets) section below.
+To install the datasets, you can use the following command:
+```bash
+python dataset/preprocess.py
+```
+For the **SWaT** dataset, you need to claim the data from the [iTrust website](https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/) and place it in the `data/swat` directory. Files needed: SWaT_Dataset_Normal_v1.xlsx, SWaT_Dataset_Attack_v0.xlsx
 
 ### 3. Run the Model
 
@@ -69,30 +72,15 @@ Both datasets come from the [Numenta Anomaly Benchmark (NAB)](https://github.com
   Location: `data/swat`  
   Source: [iTrust, SUTD](https://itrust.sutd.edu.sg/itrust-labs_datasets/dataset_info/)
 
-  ⚠ **Note:** Preprocessing is required. Use the functions in:  
-  `dataset/swat`
-
 - **Server Machine Dataset (SMD)**  
   Location: `data/smd`  
   Source: [OmniAnomaly](https://github.com/NetManAIOps/OmniAnomaly)
-
-  ⚠ **Note:** Preprocessing is required. Use the functions in:  
-  `dataset/smd`
 
 - **SMAP & MSL (NASA Telemetry Data)**  
   Location: `data/nasa`  
   Source:  
   [Paper](https://arxiv.org/abs/1802.04431) | [GitHub](https://github.com/khundman/telemanom)
 
----
-
-### ⚙ Preprocessing
-
-To preprocess SWAT or SMD datasets, run:
-
-```bash
-python dataset/preprocess.py
-```
 
 ---
 
