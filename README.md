@@ -4,6 +4,9 @@ This repository contains the implementation of **PatchTrAD**, a Transformer-base
 
 ---
 
+## News ⭐
+- **2025-05-20**: PatchTrAD has been accepted at [EUSIPCO 2025](https://eusipco2025.org/).
+
 ## 🚀 Getting Started
 
 ### 1. Install Dependencies
