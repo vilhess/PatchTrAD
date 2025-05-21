@@ -7,6 +7,9 @@ This repository contains the implementation of **PatchTrAD**, a Transformer-base
 ## News ⭐
 - **2025-05-20**: PatchTrAD has been accepted at [EUSIPCO 2025](https://eusipco2025.org/).
 
+## Architecture Overview 🧠
+![Architecture](figures/patchtrad.png)
+
 ## 🚀 Getting Started
 
 ### 1. Install Dependencies
@@ -84,8 +87,13 @@ Both datasets come from the [Numenta Anomaly Benchmark (NAB)](https://github.com
   Source:  
   [Paper](https://arxiv.org/abs/1802.04431) | [GitHub](https://github.com/khundman/telemanom)
 
-
 ---
+
+
+## Results
+![Results](figures/results.png)
+Note: Results may have changed since the time of writing. For the latest results, please refer to the `results` folder. Especially for NASA datasets where we changed the normalization method.
+
 
 ## 📚 Citation
 
