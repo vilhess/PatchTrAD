@@ -52,7 +52,7 @@ def main(cfg: DictConfig):
    
         LitModel = PatchTradLit(config)
         
-        trainer = L.Trainer(max_epochs=config.epochs, logger=wandb_logger, enable_checkpointing=False, log_every_n_steps=1)
+        trainer = L.Trainer(max_epochs=config.epochs, logger=wandb_logger, enable_checkpointing=False, log_every_n_steps=1, accelerator=DEVICE)
         trainer.fit(model=LitModel, train_dataloaders=trainloader)
         
         results = trainer.test(model=LitModel, dataloaders=testloader)
