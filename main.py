@@ -1,5 +1,6 @@
 import torch
 import lightning as L
+from lightning.pytorch import seed_everything
 import numpy as np
 import hydra
 from omegaconf import DictConfig, OmegaConf
@@ -47,7 +48,7 @@ def main(cfg: DictConfig):
     aucs = []
     
     for i, (trainloader, testloader) in enumerate(loaders):
-        torch.manual_seed(0)
+        seed_everything(0)
         print(f"Currently working on subset {i+1}/{len(loaders)}")
    
         LitModel = PatchTradLit(config)
