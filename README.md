@@ -93,6 +93,7 @@ Both datasets come from the [Numenta Anomaly Benchmark (NAB)](https://github.com
 ## Results
 ![Results](figures/results.png)
 Note: Results may have changed since the time of writing. For the latest results, please refer to the `results` folder. Especially for NASA datasets where we changed the normalization method.
+Considering other baselines, code implementations are available in the [DL4TSAD](https://github.com/vilhess/DL4TSAD) repository.
 
 
 ## 📚 Citation
