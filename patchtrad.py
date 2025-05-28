@@ -313,7 +313,7 @@ class PatchTrad(nn.Module):
         
         h = self.encoder(patched) # bs x nvars x d_model x patch_num
 
-        out = self.head_layer(h) # bs x nvars x (flatten: window_size) or (patch: patch_len x patch_num)
+        out = self.head_layer(h) # bs x nvars x patch_len x patch_num
 
         return out, patched
     
