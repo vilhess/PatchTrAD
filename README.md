@@ -95,6 +95,29 @@ Both datasets come from the [Numenta Anomaly Benchmark (NAB)](https://github.com
 Note: Results may have changed since the time of writing. For the latest results, please refer to the `results` folder. Especially for NASA datasets where we changed the normalization method.
 Considering other baselines, code implementations are available in the [DL4TSAD](https://github.com/vilhess/DL4TSAD) repository.
 
+## PatchTrAD on a Raspberry Pi
+
+<a href="https://youtube.com/shorts/pMysMPT5imI">
+  <img src="figures/raspberry.png" alt="PatchTrAD on Raspberry Pi" width="300">
+</a>
+
+This demo (Youtube short) shows PatchTrAD running locally on a Raspberry Pi for real-time anomaly detection on time series data.  
+It highlights how lightweight PatchTrAD can be deployed efficiently on edge devices, enabling local and responsive monitoring without needing cloud infrastructure.
+
+### Features:
+- Real-time data streaming and inference
+- Low resource usage
+- LED indicator for anomaly detection
+- Compatible with Raspberry Pi 3/4
+
+### How it works:
+1. The Pi receives time series data from a sensor or simulated stream.
+2. PatchTrAD processes incoming data in a sliding window.
+3. During normal behaviour, a green led is running. If an anomaly is detected, the system triggers a red LED.
+4. All computation is done locally on the Pi.
+
+> ⚡ Ideal for IoT, predictive maintenance, and smart monitoring use cases.
+
 
 ## 📚 Citation
 
