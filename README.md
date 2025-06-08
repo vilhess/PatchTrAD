@@ -101,7 +101,7 @@ Considering other baselines, code implementations are available in the [DL4TSAD]
   <img src="figures/raspberry.png" alt="PatchTrAD on Raspberry Pi" width="300">
 </a>
 
-This demo (Youtube short) shows PatchTrAD running locally on a Raspberry Pi for real-time anomaly detection on time series data.  
+This demo (Youtube short) shows PatchTrAD running locally on a Raspberry Pi for real-time anomaly detection on time series data. Observations are send every 0.05 seconds from a simulated sensor stream, and the model processes this data in real-time. The system uses a green LED to indicate normal behavior and switches to a red LED when an anomaly is detected.  
 It highlights how lightweight PatchTrAD can be deployed efficiently on edge devices, enabling local and responsive monitoring without needing cloud infrastructure.
 
 ### Features:
