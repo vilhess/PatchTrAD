@@ -10,10 +10,6 @@ import gc
 
 from patchtrad import PatchTradLit
 from utils import save_results
-from dataset.nab import get_loaders as get_nab_loaders
-from dataset.nasa import get_loaders as get_nasa_loaders, smapfiles, mslfiles
-from dataset.smd import get_loaders as get_smd_loaders, machines
-from dataset.swat import get_loaders as get_swat_loaders
 
 torch.multiprocessing.set_sharing_strategy('file_system')
 
@@ -34,14 +30,21 @@ def main(cfg: DictConfig):
     assert dataset in av_datasets, f"Dataset ({dataset}) should be in {av_datasets}"
 
     if dataset in ["ec2_request_latency_system_failure", "nyc_taxi"]:
-        loaders = [get_nab_loaders(window_size=config.ws, root_dir="data/nab", dataset=dataset, batch_size=config.bs)]
+        from dataset.nab import get_loaders
+        loaders = [get_loaders(window_size=config.ws, root_dir="data/nab", dataset=dataset, batch_size=config.bs)]
+
     elif dataset in ["smap", "msl"]:
+        from dataset.nasa import get_loaders, smapfiles, mslfiles
         file = smapfiles if dataset == "smap" else mslfiles
-        loaders = [get_nasa_loaders(window_size=config.ws, root_dir="data/nasa", dataset=dataset, filename=f, batch_size=config.bs) for f in file]
+        loaders = [get_loaders(window_size=config.ws, root_dir="data/nasa", dataset=dataset, filename=f, batch_size=config.bs) for f in file]
+
     elif dataset == "smd":
-        loaders = [get_smd_loaders(window_size=config.ws, root_dir="data/smd/processed", machine=m, batch_size=config.bs) for m in machines]
+        from dataset.smd import get_loaders, machines
+        loaders = [get_loaders(window_size=config.ws, root_dir="data/smd/processed", machine=m, batch_size=config.bs) for m in machines]
+
     elif dataset == "swat":
-        loaders = [get_swat_loaders(window_size=config.ws, root_dir="data/swat", batch_size=config.bs)]
+        from dataset.swat import get_loaders 
+        loaders = [get_loaders(window_size=config.ws, root_dir="data/swat", batch_size=config.bs)]
 
     wandb_logger = WandbLogger(project='PatchTrAD', name=f"dataset_{dataset}")
     
