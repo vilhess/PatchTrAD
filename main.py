@@ -7,6 +7,7 @@ from omegaconf import DictConfig, OmegaConf
 import wandb
 from pytorch_lightning.loggers import WandbLogger
 import gc
+from datetime import datetime
 
 from patchtrad import PatchTradLit
 from utils import save_results
@@ -46,7 +47,8 @@ def main(cfg: DictConfig):
         from dataset.swat import get_loaders 
         loaders = [get_loaders(window_size=config.ws, root_dir="data/swat", batch_size=config.bs)]
 
-    wandb_logger = WandbLogger(project='PatchTrAD', name=f"dataset_{dataset}")
+    run_name = f"{dataset}_PatchTrAD_{datetime.now().strftime('%m%d_%H%M')}"
+    wandb_logger = WandbLogger(project='PatchTrAD', name=run_name)
     
     aucs = []
     
@@ -80,7 +82,7 @@ def main(cfg: DictConfig):
     
     final_auc = np.mean(aucs)
     print(f"Final AUC: {final_auc}")
-    save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
+    #save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
 
     wandb_logger.experiment.summary["final_auc"] = final_auc
     wandb.finish()
