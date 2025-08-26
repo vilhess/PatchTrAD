@@ -37,7 +37,7 @@ class NASA(Dataset):
 
 
         attack = np.load(os.path.join(root, "test", f"{filename}.npy"))
-        x_attack_scaled = scaler.transform(attack).clip(0, 1)
+        x_attack_scaled = scaler.transform(attack)
         attack = pd.DataFrame(x_attack_scaled)
 
         labels = np.zeros(len(attack))
