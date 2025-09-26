@@ -6,7 +6,7 @@ This repository contains the implementation of **PatchTrAD**, a Transformer-base
 
 ## News ⭐
 - **2025-05-20**: PatchTrAD has been accepted at [EUSIPCO 2025](https://arxiv.org/pdf/2504.08827) for an oral presentation. 
-Slides can be found in the `files` folder. A poster is also available there.
+Slides and a poster can be found [here](https://github.com/vilhess/PatchTrAD/tree/main/files)
 
 ## Architecture Overview 🧠
 ![Architecture](figures/patchtrad.png)
