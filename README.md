@@ -6,6 +6,8 @@ This repository contains the implementation of **PatchTrAD**, a Transformer-base
 
 ## News ⭐
 - **2025-05-20**: PatchTrAD has been accepted at [EUSIPCO 2025](https://eusipco2025.org/).
+- **2026-01-12**: Added VUS-PR and VUS-ROC metrics for evaluation on the repository [DL4TSAD](https://github.com/vilhess/DL4TSAD) and still ranks
+first overall.
 
 ## Architecture Overview 🧠
 ![Architecture](figures/patchtrad.png)
@@ -93,6 +95,14 @@ Both datasets come from the [Numenta Anomaly Benchmark (NAB)](https://github.com
 ## Results
 ![Results](figures/results.png)
 Note: Results may have changed since the time of writing. For the latest results, please refer to the `results` folder. Especially for NASA datasets where we changed the normalization method.
+
+<h3>Critical Difference Diagram Results (better=upper right)</h3>
+
+<div style="display:flex; gap:20px;">
+  <img src="figures/vus_pr_critical_difference.png" alt="VUS-PR" width="49%">
+  <img src="figures/vus_roc_critical_difference.png" alt="VUS-ROC" width="49%">
+</div>
+
 Considering other baselines, code implementations are available in the [DL4TSAD](https://github.com/vilhess/DL4TSAD) repository.
 
 ## PatchTrAD on a Raspberry Pi
