@@ -1,15 +1,17 @@
-import os
 import json
+import os
+
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
 import torch
-from torch.utils.data import Dataset, DataLoader  
+from sklearn.preprocessing import StandardScaler
+from torch.utils.data import DataLoader, Dataset
+
 
 class NABdata(Dataset):
     def __init__(
-        self, 
-        root_dir="data/nab", 
-        dataset="nyc_taxi", 
+        self,
+        root_dir="data/nab",
+        dataset="nyc_taxi",
         window_size=10,
         mode="train",
     ):
@@ -22,9 +24,9 @@ class NABdata(Dataset):
             self.config = json.load(f)[dataset]
 
         self.df = pd.read_csv(
-            os.path.join(self.root_dir, f"{self.dataset}.csv"), 
-            index_col="timestamp", 
-            parse_dates=True
+            os.path.join(self.root_dir, f"{self.dataset}.csv"),
+            index_col="timestamp",
+            parse_dates=True,
         )
 
         test_date = pd.to_datetime(self.config["test_date"])
@@ -44,7 +46,7 @@ class NABdata(Dataset):
         if self.mode == "train":
             self.data = self.df.iloc[:test_idx]
         elif self.mode == "test":
-            self.data = self.df.iloc[test_idx - self.window_size:]
+            self.data = self.df.iloc[test_idx - self.window_size :]
 
     def __len__(self):
         return len(self.data) - self.window_size
@@ -59,14 +61,19 @@ class NABdata(Dataset):
         if timestamp in pd.to_datetime(self.config["anomaly_dates"]):
             anomaly = 1
 
-        features = self.data.iloc[start:end+1]
+        features = self.data.iloc[start : end + 1]
         return torch.tensor(features.values, dtype=torch.float32).unsqueeze(1), anomaly
 
 
-    
-def get_loaders(window_size=10, root_dir="data/nab", dataset="nyc_taxi", batch_size=128):
-    train = NABdata(root_dir=root_dir, dataset=dataset, mode="train", window_size=window_size)
-    test = NABdata(root_dir=root_dir, dataset=dataset, mode="test", window_size=window_size)
+def get_loaders(
+    window_size=10, root_dir="data/nab", dataset="nyc_taxi", batch_size=128
+):
+    train = NABdata(
+        root_dir=root_dir, dataset=dataset, mode="train", window_size=window_size
+    )
+    test = NABdata(
+        root_dir=root_dir, dataset=dataset, mode="test", window_size=window_size
+    )
 
     trainloader = DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=21)
     testloader = DataLoader(test, batch_size=batch_size, shuffle=False, num_workers=21)
