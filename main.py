@@ -10,6 +10,7 @@ from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning.loggers import WandbLogger
 
 import wandb
+from config import DatasetConfig
 from patchtrad import PatchTradLit
 from utils import save_results
 
@@ -26,7 +27,7 @@ def main(cfg: DictConfig):
     print(OmegaConf.to_yaml(cfg))
     print(f"---------")
 
-    config = cfg.dataset
+    config = DatasetConfig.from_hydra(cfg.dataset)
     dataset = config.name
 
     av_datasets = [
@@ -87,6 +88,8 @@ def main(cfg: DictConfig):
                 window_size=config.ws, root_dir="data/swat", batch_size=config.bs
             )
         ]
+    else:
+        raise NotImplementedError(f"Dataset {dataset} not implemented")
 
     run_name = f"{dataset}_PatchTrAD_{datetime.now().strftime('%m%d_%H%M')}"
     wandb_logger = WandbLogger(project="PatchTrAD", name=run_name)
@@ -129,7 +132,7 @@ def main(cfg: DictConfig):
 
     final_auc = np.mean(aucs)
     print(f"Final AUC: {final_auc}")
-    # save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
+    save_results(filename="results/results.json", dataset=dataset, model=f"patchtrad", auc=round(final_auc, 4))
 
     wandb_logger.experiment.summary["final_auc"] = final_auc
     wandb.finish()
