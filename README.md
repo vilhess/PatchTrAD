@@ -8,6 +8,7 @@ This repository contains the implementation of **PatchTrAD**, a Transformer-base
 - **2025-05-20**: PatchTrAD has been accepted at [EUSIPCO 2025](https://eusipco2025.org/).
 - **2026-01-12**: Added VUS-PR and VUS-ROC metrics for evaluation on the repository [DL4TSAD](https://github.com/vilhess/DL4TSAD) and still ranks
 first overall.
+- **2026-06-17**: Added a PatchTrAD implementation for the [TSB-AD](https://github.com/thedatumorg/TSB-AD) benchmark under [`tsbad/`](tsbad/) (univariate supported, multivariate work in progress).
 
 ## Architecture Overview 🧠
 ![Architecture](figures/patchtrad.png)
